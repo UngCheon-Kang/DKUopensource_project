@@ -1,0 +1,110 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<style>
+  .review-container {
+      max-width: 600px;
+      margin: 60px auto;
+      padding: 30px;
+      background-color: #fff;
+      border-radius: 16px;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.05);
+  }
+
+  .review-container h2 {
+      text-align: center;
+      margin-bottom: 30px;
+      font-size: 1.8rem;
+  }
+
+  form {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+  }
+
+  label {
+      font-weight: bold;
+      margin-bottom: 5px;
+  }
+
+  select, textarea {
+      padding: 10px;
+      font-size: 1rem;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      width: 100%;
+      resize: vertical;
+  }
+
+  textarea::placeholder {
+      color: #aaa;
+  }
+
+  button[type="submit"] {
+      padding: 12px;
+      background-color: #222;
+      color: white;
+      font-size: 1rem;
+      font-weight: bold;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+  }
+
+  button[type="submit"]:hover {
+      background-color: #444;
+  }
+
+  .back-link {
+      display: inline-block;
+      margin-top: 20px;
+      text-decoration: none;
+      background-color: #eee;
+      color: #333;
+      padding: 10px 20px;
+      border-radius: 8px;
+      font-weight: bold;
+      transition: background-color 0.3s;
+  }
+
+  .back-link:hover {
+      background-color: #ddd;
+  }
+
+  /* 🔽 로그아웃 버튼 덮어쓰기 (base.html 상단 네비게이션) */
+  .nav-links form button {
+      all: unset;
+      font-weight: bold;
+      color: #333;
+      cursor: pointer;
+      padding: 0;
+      margin: 0;
+  }
+
+  .nav-links form button:hover {
+      text-decoration: underline;
+  }
+</style>
+
+<div class="review-container">
+  <h2>{{ medicine.medicine_name }} 평가 남기기</h2>
+
+  <form method="post">
+      {% csrf_token %}
+      <div>
+          <label for="id_rating">별점</label>
+          {{ form.rating }}
+      </div>
+      <div>
+          <label for="id_comment">후기</label>
+          {{ form.comment }}
+      </div>
+
+      <button type="submit">저장</button>
+  </form>
+
+  <a href="{% url 'detail:medicine_detail' medicine.id %}" class="back-link">← 돌아가기</a>
+</div>
+{% endblock %}

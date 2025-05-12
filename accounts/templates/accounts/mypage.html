@@ -1,0 +1,149 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<style>
+  .mypage-container {
+      max-width: 1000px;
+      margin: 60px auto;
+      padding: 0 20px;
+  }
+
+  .user-info {
+      margin-bottom: 30px;
+      padding: 20px;
+      background-color: #fff;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+      font-size: 1rem;
+      line-height: 1.6;
+  }
+
+  .user-info span {
+      font-weight: bold;
+  }
+
+  .review-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 20px;
+  }
+
+  .review-card {
+      background-color: #fff;
+      border-radius: 12px;
+      padding: 20px;
+      box-shadow: 0 6px 16px rgba(0, 0, 0, 0.05);
+      transition: transform 0.2s;
+  }
+
+  .review-title {
+      font-size: 1.1rem;
+      font-weight: bold;
+      color: #007bff;
+      text-decoration: none;
+  }
+
+  .review-title:hover {
+      text-decoration: underline;
+  }
+
+  .review-rating {
+      margin-top: 8px;
+  }
+
+  .review-comment {
+      margin-top: 10px;
+      color: #555;
+      font-size: 0.95rem;
+      white-space: pre-line;
+  }
+
+  .review-actions {
+      margin-top: 15px;
+      display: flex;
+      justify-content: flex-start;
+      gap: 8px;
+  }
+
+  .btn-edit {
+      background-color: #4f8bfd;
+      color: #fff;
+      border: none;
+      padding: 6px 14px;
+      border-radius: 6px;
+      font-size: 0.9rem;
+      font-weight: 500;
+      text-decoration: none;
+      transition: background-color 0.2s;
+  }
+
+  .btn-edit:hover {
+      background-color: #3a6ee9;
+  }
+
+  .btn-delete {
+      background-color: #e74c3c;
+      color: #fff;
+      border: none;
+      padding: 6px 14px;
+      border-radius: 6px;
+      font-size: 0.9rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: background-color 0.2s;
+  }
+
+  .btn-delete:hover {
+      background-color: #c0392b;
+  }
+
+  .no-review {
+      text-align: center;
+      margin-top: 40px;
+      color: #888;
+  }
+</style>
+
+<div class="mypage-container">
+  <h2>🧑‍💻 마이페이지</h2>
+
+  <!-- 사용자 정보 출력 -->
+  <div class="user-info">
+    <p><span>아이디:</span> {{ request.user.username }}</p>
+    <p><span>이메일:</span> {{ request.user.email }}</p>
+  </div>
+
+  <h3>내가 평가한 약품</h3>
+
+  {% if reviews %}
+  <div class="review-grid">
+    {% for review in reviews %}
+    <div class="review-card">
+      <a class="review-title" href="{% url 'detail:medicine_detail' review.medicine.id %}">
+        {{ review.medicine.medicine_name }}
+      </a>
+      <div class="review-rating">⭐ {{ review.rating }}점</div>
+      {% if review.comment %}
+      <div class="review-comment">{{ review.comment }}</div>
+      {% endif %}
+
+      <div class="review-actions">
+        <!-- 수정 버튼 -->
+        <a href="{% url 'detail:add_review' review.medicine.id %}" class="btn-edit">수정</a>
+
+        <!-- 삭제 버튼 -->
+        <form method="post" action="{% url 'accounts:delete_review' review.id %}">
+          {% csrf_token %}
+          <button type="submit" onclick="return confirm('정말 삭제하시겠습니까?')" class="btn-delete">
+            삭제
+          </button>
+        </form>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+  {% else %}
+  <p class="no-review">아직 평가한 약품이 없습니다.</p>
+  {% endif %}
+</div>
+{% endblock %}

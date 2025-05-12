@@ -1,0 +1,114 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<style>
+  .result-container {
+      max-width: 1000px;
+      margin: 60px auto;
+      padding: 0 20px;
+  }
+
+  .result-title {
+      font-size: 2rem;
+      font-weight: bold;
+      margin-bottom: 20px;
+      text-align: center;
+  }
+
+  .selected-symptoms {
+      text-align: center;
+      margin-bottom: 40px;
+      font-size: 1.1rem;
+      color: #333;
+  }
+
+  .medicine-card {
+      display: flex;
+      gap: 20px;
+      padding: 20px;
+      background-color: #fff;
+      border-radius: 12px;
+      box-shadow: 0 6px 15px rgba(0, 0, 0, 0.05);
+      margin-bottom: 30px;
+      align-items: flex-start;
+  }
+
+  .medicine-card img {
+      width: 150px;
+      height: auto;
+      object-fit: contain;
+      border-radius: 8px;
+      background-color: #f6f6f6;
+  }
+
+  .medicine-info {
+      flex-grow: 1;
+  }
+
+  .medicine-info h3 {
+      margin-top: 0;
+      margin-bottom: 10px;
+      font-size: 1.4rem;
+  }
+
+  .medicine-info h3 a {
+      color: #007bff;
+      text-decoration: none;
+  }
+
+  .medicine-info h3 a:hover {
+      text-decoration: underline;
+  }
+
+  .medicine-info p {
+      margin: 6px 0;
+      color: #444;
+  }
+
+  .no-result {
+      text-align: center;
+      color: #777;
+      margin-top: 60px;
+      font-size: 1.1rem;
+  }
+</style>
+
+<div class="result-container">
+  <h2 class="result-title">추천 결과</h2>
+
+  {% if selected_symptoms %}
+    <p class="selected-symptoms"><strong>선택한 증상:</strong> {{ selected_symptoms|join:", " }}</p>
+
+    {% if medicines %}
+      {% for med in medicines %}
+        <div class="medicine-card">
+          {% if med.image_path %}
+            <img src="{% static med.image_path %}" alt="{{ med.medicine_name }}">
+          {% else %}
+            <img src="{% static 'images/default.jpg' %}" alt="기본 이미지">
+          {% endif %}
+
+          <div class="medicine-info">
+            <h3>
+              <a href="{% url 'detail:medicine_detail' med.id %}?from=recommend">
+                {{ med.medicine_name }}
+              </a>
+            </h3>
+            <p><strong>주요 성분:</strong> {{ med.main_ingredients }}</p>
+            <p><strong>복용법:</strong> {{ med.dosage_by_age }}</p>
+            <p><strong>회사:</strong> {{ med.company }}</p>
+            {% if med.precautions %}
+              <p><strong>주의사항:</strong> {{ med.precautions }}</p>
+            {% endif %}
+          </div>
+        </div>
+      {% endfor %}
+    {% else %}
+      <p class="no-result">해당 증상에 맞는 의약품을 찾을 수 없습니다.</p>
+    {% endif %}
+  {% else %}
+    <p class="no-result">증상을 선택하지 않았습니다.</p>
+  {% endif %}
+</div>
+{% endblock %}

@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>Pill and Pick</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            background-color: #ffffff;
+        }
+
+        header {
+            padding: 20px 40px;
+            font-size: 24px;
+            font-weight: bold;
+            border-bottom: 1px solid #eee;
+        }
+
+        .container {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 60px 20px;
+        }
+
+        h1 {
+            font-size: 48px;
+            margin-bottom: 20px;
+        }
+
+        p {
+            font-size: 20px;
+            margin-bottom: 40px;
+        }
+
+        .button-group {
+            display: flex;
+            gap: 20px;
+        }
+
+        .button {
+            padding: 12px 30px;
+            font-size: 18px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .button.white {
+            background-color: #ffffff;
+            color: #000;
+            border: 1px solid #ddd;
+        }
+
+        .button.black {
+            background-color: #111;
+            color: #fff;
+        }
+
+        .button.black:hover {
+            background-color: #333;
+        }
+
+        .button.white:hover {
+            background-color: #f2f2f2;
+        }
+
+        .icon {
+            position: absolute;
+            top: 20px;
+            right: 30px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        Pill and Pick
+    </header>
+
+    <div class="icon">
+        🏠
+    </div>
+
+    <div class="container">
+        <h1>Pill and Pick</h1>
+        <p>의약품 정보 제공 및 증상별 의약품 추천 서비스에 오신 것을 환영합니다.</p>
+
+        <div class="button-group">
+            <a href="{% url 'accounts:intro' %}">
+                <button class="button white">소개</button>
+            </a>
+            <a href="{% url 'accounts:login' %}">
+                <button class="button black">시작하기</button>
+            </a>
+        </div>
+    </div>
+</body>
+</html>

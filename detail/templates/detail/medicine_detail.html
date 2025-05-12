@@ -1,0 +1,171 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<style>
+  .detail-container {
+      max-width: 800px;
+      margin: 60px auto;
+      padding: 0 20px;
+  }
+
+  .medicine-header {
+      background-color: #fff;
+      padding: 20px 25px;
+      border-radius: 12px;
+      box-shadow: 0 6px 12px rgba(0, 0, 0, 0.05);
+      margin-bottom: 30px;
+      display: flex;
+      gap: 24px;
+  }
+
+  .medicine-image {
+      width: 160px;
+      height: 160px;
+      flex-shrink: 0;
+      background-color: #eee;
+      border-radius: 10px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      overflow: hidden;
+  }
+
+  .medicine-image img {
+      max-width: 100%;
+      max-height: 100%;
+      object-fit: contain;
+  }
+
+  .medicine-info {
+      flex: 1;
+  }
+
+  .medicine-info h2 {
+      font-size: 1.8rem;
+      margin-bottom: 12px;
+  }
+
+  .medicine-info p {
+      margin: 6px 0;
+      color: #333;
+  }
+
+  .rating-box {
+      margin-top: 10px;
+      font-size: 1rem;
+      color: #222;
+  }
+
+  .review-link {
+      margin-top: 8px;
+      display: inline-block;
+      color: #007bff;
+      font-weight: bold;
+      text-decoration: none;
+  }
+
+  .review-link:hover {
+      text-decoration: underline;
+  }
+
+  .reviews-section {
+      background-color: #fff;
+      padding: 20px 25px;
+      border-radius: 12px;
+      box-shadow: 0 6px 12px rgba(0, 0, 0, 0.04);
+      margin-bottom: 30px;
+  }
+
+  .reviews-section h3 {
+      margin-top: 0;
+      margin-bottom: 1rem;
+      font-size: 1.3rem;
+  }
+
+  .review-item {
+      border-top: 1px solid #eee;
+      padding: 12px 0;
+  }
+
+  .review-item:first-child {
+      border-top: none;
+  }
+
+  .review-user {
+      font-weight: bold;
+      margin-bottom: 4px;
+      display: block;
+  }
+
+  .no-review {
+      color: #777;
+  }
+
+  .back-button {
+      display: inline-block;
+      margin-top: 20px;
+      padding: 12px 24px;
+      background-color: #ddd;
+      color: black;
+      text-decoration: none;
+      border-radius: 8px;
+      font-weight: bold;
+  }
+
+  .back-button:hover {
+      background-color: #ccc;
+  }
+</style>
+
+<div class="detail-container">
+  <div class="medicine-header">
+    <div class="medicine-image">
+      {% if medicine.image_path %}
+        <img src="{% static medicine.image_path %}" alt="의약품 이미지">
+      {% else %}
+        <span>이미지 없음</span>
+      {% endif %}
+    </div>
+    <div class="medicine-info">
+      <h2>{{ medicine.medicine_name }}</h2>
+      <p><strong>증상:</strong> {{ medicine.symptom }}</p>
+      <p><strong>복용법:</strong> {{ medicine.dosage_by_age }}</p>
+      <p><strong>회사:</strong> {{ medicine.company }}</p>
+      <p><strong>주의사항:</strong> {{ medicine.precautions|default:"(없음)" }}</p>
+
+      <div class="rating-box">
+        <strong>⭐ 평균 별점:</strong> {{ avg_rating }}/5
+      </div>
+
+      {% if user.is_authenticated %}
+        <a href="{% url 'detail:add_review' medicine.id %}" class="review-link">✍ 평가 남기기</a>
+      {% else %}
+        <p class="review-link">로그인하면 평가를 남길 수 있습니다.</p>
+      {% endif %}
+    </div>
+  </div>
+
+  <div class="reviews-section">
+    <h3>💬 사용자 리뷰</h3>
+    {% for review in reviews %}
+      <div class="review-item">
+        <span class="review-user">{{ review.user.username }}</span>
+        <span>⭐ {{ review.rating }}점</span><br>
+        <p>{{ review.comment }}</p>
+      </div>
+    {% empty %}
+      <p class="no-review">아직 리뷰가 없습니다.</p>
+    {% endfor %}
+  </div>
+
+  {% if request.GET.from == 'search' %}
+    <a href="{% url 'search:search_medicine' %}" class="back-button">← 검색 결과로 돌아가기</a>
+  {% elif request.GET.from == 'recommend' %}
+    <a href="{% url 'recommend:symptom_select' %}" class="back-button">← 추천 결과로 돌아가기</a>
+  {% else %}
+    <a href="{% url 'accounts:dashboard' %}" class="back-button">← 대시보드로 돌아가기</a>
+  {% endif %}
+</div>
+{% endblock %}
+

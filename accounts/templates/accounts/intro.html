@@ -1,0 +1,96 @@
+{% extends "base_login.html" %}
+
+{% block content %}
+<style>
+    body {
+        background-color: #f5f5f5;
+    }
+
+    .intro-wrapper {
+        max-width: 800px;
+        margin: 40px auto;
+        padding: 20px;
+    }
+
+    .card {
+        background-color: #f8f8f8;
+        padding: 30px;
+        margin-bottom: 20px;
+        border-radius: 12px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    }
+
+    .card h2 {
+        margin-bottom: 16px;
+        font-size: 24px;
+        font-weight: bold;
+    }
+
+    .card ul {
+        padding-left: 20px;
+        margin: 0;
+    }
+
+    .card ul li {
+        margin-bottom: 8px;
+    }
+
+    .btn-container {
+        text-align: center;
+        margin-top: 30px;
+    }
+
+    .btn {
+        padding: 12px 24px;
+        background-color: #111;
+        color: white;
+        border: none;
+        border-radius: 8px;
+        font-size: 16px;
+        cursor: pointer;
+    }
+
+    .btn:hover {
+        background-color: #333;
+    }
+</style>
+
+<div class="intro-wrapper">
+    <div class="card">
+        <h2>목적</h2>
+        <p>
+            본 서비스는 사용자들이 의약품에 대한 정확한 정보를 쉽게 얻고, 자신의 증상에 맞는 의약품을 추천받을 수 있도록 도와드립니다.
+        </p>
+    </div>
+
+    <div class="card">
+        <h2>추구하는 가치</h2>
+        <ul>
+            <li>정확한 의약품 정보 제공</li>
+            <li>사용자 친화적인 인터페이스</li>
+            <li>증상별 맞춤형 의약품 추천</li>
+            <li>건강한 자가 관리 지원</li>
+        </ul>
+    </div>
+
+    <div class="card">
+        <h2>서비스 특징</h2>
+        <p>
+            의약품 정보 검색과 증상별 의약품 추천 기능을 통해 사용자들이 자신에게 필요한 의약품을 쉽게 찾을 수 있도록 도와드립니다.
+            모든 정보는 신뢰할 수 있는 출처를 기반으로 제공됩니다.
+        </p>
+
+        <div class="btn-container">
+            {% if user.is_authenticated %}
+                <a href="{% url 'accounts:dashboard' %}">
+                    <button class="btn">시작하기</button>
+                </a>
+            {% else %}
+                <a href="{% url 'accounts:login' %}">
+                    <button class="btn">시작하기</button>
+                </a>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}

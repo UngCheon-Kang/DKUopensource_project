@@ -1,0 +1,150 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<style>
+    body {
+        background-color: #f3f3f3;
+    }
+
+    .content-box {
+        background-color: white;
+        padding: 3rem 4rem;
+        border-radius: 16px;
+        box-shadow: 0 0 20px rgba(0,0,0,0.05);
+        max-width: 1000px;
+        margin: 40px auto;
+    }
+
+    .search-title {
+        text-align: center;
+        margin-bottom: 2rem;
+        font-size: 2rem;
+    }
+
+    .search-box form {
+        display: flex;
+        gap: 1rem;
+        justify-content: center;
+        margin-bottom: 2rem;
+    }
+
+    .search-box input[type="text"] {
+        width: 60%;
+        padding: 12px;
+        font-size: 16px;
+        border-radius: 10px;
+        border: 2px solid #ccc;
+    }
+
+    .search-box button {
+        padding: 12px 20px;
+        font-size: 16px;
+        background-color: #222;
+        color: white;
+        border-radius: 5px;
+        border: none;
+        cursor: pointer;
+    }
+
+    .search-box button:hover {
+        background-color: #444;
+    }
+
+    .card {
+        display: flex;
+        gap: 30px;
+        align-items: flex-start;
+        border: 1px solid #ddd;
+        border-radius: 12px;
+        padding: 24px;
+        background: #fafafa;
+    }
+
+    .image {
+        width: 180px;
+        height: 180px;
+        background-color: #eee;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-shrink: 0;
+        border-radius: 8px;
+    }
+
+    .image img {
+        max-width: 100%;
+        max-height: 100%;
+        object-fit: contain;
+    }
+
+    .info {
+        flex-grow: 1;
+    }
+
+    .info h2 {
+        margin-bottom: 10px;
+    }
+
+    .info p {
+        margin: 5px 0;
+    }
+
+    .label {
+        font-weight: bold;
+    }
+
+    .info h2 a {
+        color: black;
+        text-decoration: none;
+    }
+
+    .info h2 a:hover {
+        text-decoration: underline;
+    }
+
+    .no-result {
+        text-align: center;
+        color: #666;
+    }
+</style>
+
+<div class="content-box">
+    <h2 class="search-title">의약품 정보 검색</h2>
+
+    <div class="search-box">
+        <form method="get">
+            <input type="text" name="q" placeholder="타이레놀" value="{{ request.GET.q }}">
+            <button type="submit">검색</button>
+        </form>
+    </div>
+
+    {% if result %}
+    <div class="card">
+        <div class="image">
+            {% if result.image_path %}
+                <img src="{% static result.image_path %}" alt="이미지">
+            {% else %}
+                <span>이미지 없음</span>
+            {% endif %}
+        </div>
+        <div class="info">
+            <h2>
+                <a href="{% url 'detail:medicine_detail' result.id %}?from=search">
+                    {{ result.medicine_name }}
+                </a>
+            </h2>
+            <p><span class="label">주 성분</span><br>{{ result.main_ingredients }}</p>
+            <p><span class="label">증상 및 효과</span><br>{{ result.symptom }}</p>
+            <p><span class="label">복용법 및 복용량</span><br>{{ result.dosage_by_age }}</p>
+            <p><span class="label">제조사</span>: {{ result.company }}</p>
+            {% if result.precautions %}
+            <p><span class="label">주의사항</span><br>{{ result.precautions }}</p>
+            {% endif %}
+        </div>
+    </div>
+    {% elif request.GET.q %}
+        <p class="no-result">검색 결과가 없습니다.</p>
+    {% endif %}
+</div>
+{% endblock %}

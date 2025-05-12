@@ -1,0 +1,114 @@
+{% extends "base_login.html" %}
+
+{% block content %}
+<style>
+  .signup-container {
+      max-width: 500px;
+      margin: 60px auto;
+      padding: 30px;
+      background-color: #fff;
+      border-radius: 16px;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.05);
+  }
+
+  .signup-container h2 {
+      text-align: center;
+      margin-bottom: 30px;
+      font-size: 1.8rem;
+  }
+
+  form {
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+  }
+
+  label {
+      font-weight: bold;
+      margin-bottom: 5px;
+  }
+
+  input {
+      padding: 10px;
+      font-size: 1rem;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+      width: 100%;
+  }
+
+  .errorlist {
+      color: red;
+      margin: 0;
+      padding-left: 0;
+      list-style: none;
+      font-size: 0.9rem;
+  }
+
+  small, ul {
+      font-size: 0.85rem;
+      color: #555;
+  }
+
+  ul {
+      padding-left: 20px;
+      margin-top: 5px;
+  }
+
+  button[type="submit"] {
+      padding: 12px;
+      background-color: #222;
+      color: white;
+      font-size: 1rem;
+      font-weight: bold;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+  }
+
+  button[type="submit"]:hover {
+      background-color: #444;
+  }
+
+  .link {
+      margin-top: 20px;
+      text-align: center;
+  }
+
+  .link a {
+      color: #007bff;
+      text-decoration: none;
+      font-weight: bold;
+  }
+
+  .link a:hover {
+      text-decoration: underline;
+  }
+</style>
+
+<div class="signup-container">
+  <h2>회원가입</h2>
+
+  <form method="post">
+      {% csrf_token %}
+      {{ form.non_field_errors }}
+
+      {% for field in form %}
+          <div>
+              {{ field.label_tag }}
+              {{ field }}
+              {{ field.errors }}
+              {% if field.help_text %}
+                  <div style="margin-top: 5px;">{{ field.help_text|safe }}</div>
+              {% endif %}
+          </div>
+      {% endfor %}
+
+      <button type="submit">계정 생성</button>
+  </form>
+
+  <div class="link">
+      <a href="{% url 'accounts:login' %}">이미 계정이 있으신가요? 로그인</a>
+  </div>
+</div>
+{% endblock %}

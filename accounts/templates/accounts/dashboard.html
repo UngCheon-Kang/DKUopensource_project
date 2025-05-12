@@ -1,0 +1,77 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<style>
+  .dashboard-container {
+      max-width: 1200px;
+      margin: 60px auto;
+      padding: 0 20px;
+  }
+
+  .dashboard-title {
+      font-size: 2.2rem;
+      font-weight: bold;
+      margin-bottom: 40px;
+      text-align: center;
+  }
+
+  .card-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 30px;
+  }
+
+  .card {
+      background-color: white;
+      border-radius: 16px;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.06);
+      padding: 2rem;
+      transition: transform 0.2s, box-shadow 0.2s;
+  }
+
+  .card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 12px 24px rgba(0, 0, 0, 0.1);
+  }
+
+  .card h2 {
+      font-size: 1.4rem;
+      margin-bottom: 10px;
+  }
+
+  .card p {
+      color: #555;
+      margin-bottom: 1rem;
+  }
+
+  .card a {
+      display: inline-block;
+      margin-top: 10px;
+      color: #007bff;
+      text-decoration: none;
+      font-weight: bold;
+  }
+
+  .card a:hover {
+      text-decoration: underline;
+  }
+</style>
+
+<div class="dashboard-container">
+    <h1 class="dashboard-title">기능 선택</h1>
+
+    <div class="card-grid">
+        <div class="card">
+            <h2>🔍 의약품 정보 제공</h2>
+            <p>의약품 이름을 입력하면 해당 의약품의 상세 정보를 확인할 수 있습니다.</p>
+            <a href="{% url 'search:search_medicine' %}">의약품 정보 검색하기 →</a>
+        </div>
+
+        <div class="card">
+            <h2>📝 증상별 의약품 추천</h2>
+            <p>여러 증상을 선택하면 해당 증상들을 모두 해결할 수 있는 의약품을 추천해 드립니다.</p>
+            <a href="{% url 'recommend:symptom_select' %}">증상별 추천받기 →</a>
+        </div>
+    </div>
+</div>
+{% endblock %}

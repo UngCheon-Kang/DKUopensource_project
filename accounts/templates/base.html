@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>Pill and Pick</title>
+    <style>
+        body {
+            font-family: 'Noto Sans KR', sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+        }
+
+        /* 네비게이션 바 */
+        .navbar {
+            background-color: white;
+            border-bottom: 1px solid #eee;
+            padding: 15px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .navbar h1 {
+            margin: 0;
+            font-size: 24px;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 20px;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: #333;
+            font-weight: bold;
+        }
+
+        .nav-links a:hover {
+            text-decoration: underline;
+        }
+
+        .nav-links button {
+            background: none;
+            border: none;
+            font: inherit;
+            color: #333;
+            font-weight: bold;
+            cursor: pointer;
+            padding: 0;
+            margin: 0;
+        }
+    </style>
+</head>
+<body>
+
+<!-- 🔼 공통 네비게이션 -->
+<div class="navbar">
+    <h1>Pill and Pick</h1>
+    {% if user.is_authenticated %}
+    <div class="nav-links">
+        <a href="{% url 'accounts:intro' %}">🧑‍🤝‍🧑 About Us</a>
+        <a href="{% url 'accounts:dashboard' %}">📋 Dashboard</a>
+        <a href="{% url 'search:search_medicine' %}">🔍 의약품 검색</a>
+        <a href="{% url 'recommend:symptom_select' %}">📝 증상별 추천</a>
+        <a href="{% url 'accounts:mypage' %}">👤 My Page</a>
+        <form method="post" action="{% url 'accounts:logout' %}">
+            {% csrf_token %}
+            <button type="submit">🚪 로그아웃</button>
+        </form>
+    </div>
+    {% endif %}
+</div>
+
+<!-- 🔽 페이지 콘텐츠 -->
+{% block content %}{% endblock %}
+
+</body>
+</html>

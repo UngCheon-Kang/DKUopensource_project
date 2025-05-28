@@ -130,9 +130,10 @@
     <div class="medicine-info">
       <h2>{{ medicine.medicine_name }}</h2>
       <p><strong>증상:</strong> {{ medicine.symptom }}</p>
+      <p><strong>주요성분:</strong> {{ medicine.main_ingredients}}</p>
       <p><strong>복용법:</strong> {{ medicine.dosage_by_age }}</p>
       <p><strong>회사:</strong> {{ medicine.company }}</p>
-      <p><strong>주의사항:</strong> {{ medicine.precautions|default:"(없음)" }}</p>
+      <p><strong>주의사항:</strong> {{ medicine.precautions }}</p>
 
       <div class="rating-box">
         <strong>⭐ 평균 별점:</strong> {{ avg_rating }}/5

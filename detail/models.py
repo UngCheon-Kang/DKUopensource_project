@@ -1,5 +1,5 @@
-from django.db import models
-from django.contrib.auth.models import User
+from django.db import models  # Django의 ORM 기능을 제공하는 models 모듈을 import함
+from django.contrib.auth.models import User  # Django에서 기본 제공하는 사용자(User) 모델을 import함
 from search.models import OTCMedicine  # 약품 모델 import
 
 class Review(models.Model):

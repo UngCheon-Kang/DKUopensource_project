@@ -64,6 +64,16 @@ TEMPLATES = [
     },
 ]
 
+
+# 로그인 성공 후 이동할 기본 페이지
+LOGIN_REDIRECT_URL = 'accounts:dashboard'
+
+
+# 정적 파일 경로 설정 (개발용)
+STATIC_URL = '/static/'  # URL 접두어
+STATICFILES_DIRS = [BASE_DIR / 'static']  # 실제 정적 파일 위치
+
+
 # WSGI 애플리케이션 진입점 (배포 시 사용)
 WSGI_APPLICATION = 'pillandpick_project.wsgi.application'
 
@@ -117,12 +127,3 @@ DATABASES = {
         }
     }
 }
-
-
-# 로그인 성공 후 이동할 기본 페이지
-LOGIN_REDIRECT_URL = 'accounts:dashboard'
-
-
-# 정적 파일 경로 설정 (개발용)
-STATIC_URL = '/static/'  # URL 접두어
-STATICFILES_DIRS = [BASE_DIR / 'static']  # 실제 정적 파일 위치

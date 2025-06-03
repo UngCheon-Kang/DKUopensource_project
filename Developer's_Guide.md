@@ -102,16 +102,6 @@ python manage.py runserver
 ```bash
 python manage.py test
 ```
-
----
-
-##  9단계: GitHub 기여 방법
-
-1. 레포지토리를 fork 후 clone
-2. 기능 개발을 위한 브랜치 생성 (예: `feature/검색기능`)
-3. 변경사항 커밋 및 푸시
-4. Pull Request 생성 후 코드 리뷰 요청
-
 ---
 
 ##  문의 

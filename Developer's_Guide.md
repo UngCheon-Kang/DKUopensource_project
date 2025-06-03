@@ -45,23 +45,25 @@ pip install -r requirements.txt
 
 ##  4단계: MySQL 데이터베이스 설정
 
-1. MySQL 접속 후 데이터베이스 생성:
+1. MySQL 접속 후 데이터베이스 생성 및 database 폴더에서 OTC_medicines.sql파일로 테이블 생성 :
 
 ```sql
-CREATE DATABASE pillandpick;
+CREATE DATABASE pillandpick_db;
 ```
 
 2. `pillandpick_project/settings.py` 파일에서 DB 설정 수정:
 
 ```python
 DATABASES = {
-  'default': {
-    'ENGINE': 'django.db.backends.mysql',
-    'NAME': 'pillandpick',
-    'USER': 'pillandpick_user',
-    'PASSWORD': 'your_password',
-    'HOST': 'localhost',
-    'PORT': '3306',
+    'default': {
+        'ENGINE': 'django.db.backends.mysql',  # 사용 DB 엔진: MySQL
+        'NAME': 'pillandpick_db',              # 데이터베이스 이름
+        'USER': 'root',                        # 사용자명
+        'PASSWORD': '0000',                    # 비밀번호
+        'HOST': '127.0.0.1',                   # 로컬 호스트 주소
+        'PORT': '3306',                        # 기본 포트
+        'OPTIONS': {
+            'init_command': "SET sql_mode='STRICT_TRANS_TABLES'",  # SQL 모드 설정 (정확한 데이터 입력 유도)
   }
 }
 ```

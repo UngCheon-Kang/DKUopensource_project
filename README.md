@@ -66,13 +66,6 @@ python manage.py runserver
 ```
 ---
 
-## 🧾 프로젝트 기여
-
-1. Fork 및 Clone
-2. 브랜치 생성 (예: `feature/추천기능`)
-3. 커밋 후 PR 생성
----
-
 ## 문의
 
 * 이메일: [kuc9877@naver.com](mailto:kuc9877@naver.com)

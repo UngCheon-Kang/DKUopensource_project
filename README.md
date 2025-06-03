@@ -46,7 +46,7 @@ source venv/bin/activate        # Windows는 venv\Scripts\activate
 pip install -r requirements.txt
 ```
 
-4. MySQL 데이터베이스 설정
+4. MySQL 데이터베이스 설정 및 OTC_medici성
 
 ```bash
 CREATE DATABASE pillandpick;

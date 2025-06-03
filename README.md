@@ -18,7 +18,7 @@
 | 분야     | 기술 스택                         |
 | ------ | ----------------------------- |
 | 백엔드    | Django 4.x, Python 3.10       |
-| 프론트엔드  | HTML, CSS, JavaScript (Jinja) |
+| 프론트엔드  | HTML, CSS |
 | 데이터베이스 | MySQL 8.x                     |
 | 기타     | GitHub, venv, difflib         |
 
